@@ -44,4 +44,10 @@ class ExpenseRepositoryImpl @Inject constructor(
                 entities.map { it.toDomain() }
             }
     }
+
+    override suspend fun getExpenseById(id: Long): Expense? {
+        return expenseDao
+            .getExpenseById(id)
+            ?.toDomain()
+    }
 }

@@ -22,4 +22,7 @@ interface ExpenseDao {
 
     @Query("SELECT * FROM expenses ORDER BY date DESC")
     fun getAllExpenses(): Flow<List<ExpenseEntity>>
+
+    @Query("SELECT * FROM expenses WHERE id = :id LIMIT 1")
+    suspend fun getExpenseById(id: Long): ExpenseEntity?
 }

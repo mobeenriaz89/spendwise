@@ -18,4 +18,6 @@ interface ExpenseRepository {
     )
 
     fun getAllExpenses(): Flow<List<Expense>>
+
+    suspend fun getExpenseById(id: Long): Expense?
 }
