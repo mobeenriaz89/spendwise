@@ -19,7 +19,6 @@ class AddExpenseViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(AddExpenseState())
     val uiState: StateFlow<AddExpenseState> = _uiState.asStateFlow()
-    private var originalDate: Long = 0
     fun onTitleChanged(value: String) {
         _uiState.update {
             it.copy(title = value)

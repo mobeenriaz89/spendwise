@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ingenious.spendwise.presentation.add_expense.AddExpenseScreen
+import com.ingenious.spendwise.presentation.add_expense.EditExpenseScreen
 import com.ingenious.spendwise.presentation.history.HistoryScreen
 
 @Composable
