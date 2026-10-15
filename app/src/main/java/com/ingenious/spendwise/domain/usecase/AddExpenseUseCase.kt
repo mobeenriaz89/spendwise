@@ -16,7 +16,7 @@ class AddExpenseUseCase @Inject constructor(
             "Title cannot be empty"
         }
 
-        require(expense.amount > 0) {
+        require(expense.amountInPaisa > 0) {
             "Amount must be greater than zero"
         }
 

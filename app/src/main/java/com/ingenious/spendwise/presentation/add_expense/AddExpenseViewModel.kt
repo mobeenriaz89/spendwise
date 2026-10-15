@@ -2,6 +2,7 @@ package com.ingenious.spendwise.presentation.add_expense
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ingenious.spendwise.core.util.toPaisaOrNull
 import com.ingenious.spendwise.domain.model.Expense
 import com.ingenious.spendwise.domain.usecase.AddExpenseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -55,13 +56,13 @@ class AddExpenseViewModel @Inject constructor(
             try {
                 val state = _uiState.value
 
-                val amount = state.amount.toDoubleOrNull()
+                val amountInPaisa = state.amount.toPaisaOrNull()
 
-                if (amount == null) {
+                if (amountInPaisa == null) {
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = "Please enter a valid amount"
+                            error = "Enter a valid amount with up to 2 decimal places"
                         )
                     }
                     return@launch
@@ -70,7 +71,7 @@ class AddExpenseViewModel @Inject constructor(
                 val expense = Expense(
                     id = 0,
                     title = state.title,
-                    amount = amount,
+                    amountInPaisa = amountInPaisa,
                     category = state.category,
                     note = state.note.ifBlank { null },
                     date = System.currentTimeMillis()

@@ -7,7 +7,7 @@ import com.ingenious.spendwise.domain.model.Expense
         return Expense(
             id = id,
             title = title,
-            amount = amount,
+            amountInPaisa = amountInPaisa,
             category = category,
             note = note,
             date = date
@@ -18,7 +18,7 @@ import com.ingenious.spendwise.domain.model.Expense
         return ExpenseEntity(
             id = id,
             title = title,
-            amount = amount,
+            amountInPaisa = amountInPaisa,
             category = category,
             note = note,
             date = date

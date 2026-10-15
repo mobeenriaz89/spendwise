@@ -24,7 +24,9 @@ object DatabaseModule {
             context,
             ExpenseDatabase::class.java,
             "expense_database"
-        ).build()
+        )
+            .addMigrations(ExpenseDatabase.MIGRATION_1_2)
+            .build()
     }
 
     @Provides
@@ -32,6 +34,6 @@ object DatabaseModule {
     fun provideExpenseDao(
         database: ExpenseDatabase
     ): ExpenseDao {
-        return database.expenseDao
+        return database.expenseDao()
     }
 }

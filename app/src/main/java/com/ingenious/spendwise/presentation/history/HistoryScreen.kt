@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ingenious.spendwise.core.util.toPkrString
 import com.ingenious.spendwise.domain.model.Expense
 
 @Composable
@@ -145,7 +146,7 @@ private fun ExpenseItem(
             )
 
             Text(
-                text = "Rs. ${expense.amount}",
+                text = expense.amountInPaisa.toPkrString(),
                 style = MaterialTheme.typography.bodyLarge
             )
 

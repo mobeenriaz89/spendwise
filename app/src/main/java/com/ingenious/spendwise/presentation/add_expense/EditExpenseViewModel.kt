@@ -2,6 +2,7 @@ package com.ingenious.spendwise.presentation.add_expense
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ingenious.spendwise.core.util.toPaisaOrNull
 import com.ingenious.spendwise.domain.model.Expense
 import com.ingenious.spendwise.domain.usecase.GetExpenseByIdUseCase
 import com.ingenious.spendwise.domain.usecase.UpdateExpenseUseCase
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
+import java.math.BigDecimal
 @HiltViewModel
 class EditExpenseViewModel @Inject constructor(
     private val getExpenseByIdUseCase: GetExpenseByIdUseCase,
@@ -46,7 +47,8 @@ class EditExpenseViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         title = expense.title,
-                        amount = expense.amount.toString(),
+                        amount = BigDecimal.valueOf(expense.amountInPaisa, 2)
+                            .toPlainString(),
                         category = expense.category,
                         note = expense.note.orEmpty(),
                         isLoading = false
@@ -101,23 +103,22 @@ class EditExpenseViewModel @Inject constructor(
             try {
                 val state = _uiState.value
 
-                val amount = state.amount.toDoubleOrNull()
+                val amountInPaisa = state.amount.toPaisaOrNull()
 
-                if (amount == null) {
+                if (amountInPaisa == null) {
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = "Please enter a valid amount"
+                            error = "Enter a valid amount with up to 2 decimal places"
                         )
                     }
-
                     return@launch
                 }
 
                 val expense = Expense(
                     id = expenseId,
                     title = state.title,
-                    amount = amount,
+                    amountInPaisa = amountInPaisa,
                     category = state.category,
                     note = state.note.ifBlank { null },
                     date = originalDate

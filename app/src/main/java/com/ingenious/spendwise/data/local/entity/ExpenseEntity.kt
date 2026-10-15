@@ -10,7 +10,7 @@ data class ExpenseEntity(
 
     val title: String,
 
-    val amount: Double,
+    val amountInPaisa: Long,
 
     val category: String,
 
