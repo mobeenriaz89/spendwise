@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ingenious.spendwise.presentation.add_expense.AddExpenseScreen
 import com.ingenious.spendwise.presentation.add_expense.EditExpenseScreen
+import com.ingenious.spendwise.presentation.dashboard.DashboardScreen
 import com.ingenious.spendwise.presentation.history.HistoryScreen
 
 @Composable
@@ -15,8 +16,23 @@ fun SpendWiseNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.History.route
+        startDestination = Screen.Dashboard.route
     ) {
+        composable(Screen.Dashboard.route) {
+            DashboardScreen(
+                onAddExpense = {
+                    navController.navigate(Screen.AddExpense.route)
+                },
+                onExpenseClick = { expenseId ->
+                    navController.navigate(
+                        Screen.EditExpense.createRoute(expenseId)
+                    )
+                },
+                onViewAllExpenses = {
+                    navController.navigate(Screen.History.route)
+                }
+            )
+        }
         composable(Screen.History.route) {
             HistoryScreen(
                 onAddExpenseClick = {
@@ -49,7 +65,8 @@ fun SpendWiseNavHost() {
 
             val expenseId = backStackEntry
                 .arguments
-                ?.getLong("expenseId")
+                ?.getString("expenseId")
+                ?.toLongOrNull()
                 ?: return@composable
 
             EditExpenseScreen(

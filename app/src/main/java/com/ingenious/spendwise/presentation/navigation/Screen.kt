@@ -3,6 +3,7 @@ package com.ingenious.spendwise.presentation.navigation
 sealed class Screen(
     val route: String
 ) {
+    data object Dashboard : Screen("dashboard")
     data object AddExpense : Screen("add_expense")
     data object History : Screen("history")
     data object EditExpense : Screen("edit_expense/{expenseId}") {
